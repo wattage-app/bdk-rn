@@ -127,6 +127,22 @@ class BdkRnModule: NSObject {
     }
     
     @objc
+    func generateSignedPsbt(_
+        recipient: String,
+        amount: NSNumber,
+        resolve: @escaping RCTPromiseResolveBlock,
+        reject: @escaping RCTPromiseRejectBlock
+    ) {
+        do {
+            let responseObject = try bdkFunctions.generateSignedPsbt(recipient, amount: amount)
+            resolve(responseObject)
+        } catch let error {
+            let details = "\(error)"
+            reject("GenerateSignedPsbt Error", details, error)
+        }
+    }
+    
+    @objc
     func getLastUnusedAddress(_
                               resolve: @escaping RCTPromiseResolveBlock,
                               reject: @escaping RCTPromiseRejectBlock

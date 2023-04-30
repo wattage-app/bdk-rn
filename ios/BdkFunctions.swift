@@ -206,6 +206,17 @@ class BdkFunctions: NSObject {
             throw error
         }
     }
+    
+    func generateSignedPsbt(_ recipient: String, amount: NSNumber) throws -> String {
+        do {
+            let txBuilder = TxBuilder().addRecipient(address: recipient, amount: UInt64(truncating: amount))
+            let psbt = try txBuilder.finish(wallet: wallet)
+            try wallet.sign(psbt: psbt)
+            return psbt.serialize()
+        } catch {
+            throw error
+        }
+    }
 
 
     func broadcastTx(_ recipient: String, amount: NSNumber) throws -> String {
